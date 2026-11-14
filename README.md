@@ -8,7 +8,7 @@ installation, accounts, or build tools required.
 
 ## Live demo
 
-[Open Focus Timer](https://YOUR_USERNAME.github.io/pomodoro-timer/)
+[Open Focus Timer](https://donavr.github.io/pomodoro-timer/)
 
 Replace `YOUR_USERNAME` with your GitHub username after deployment.
 
