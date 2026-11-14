@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b26">
+  <meta
+    name="description"
+    content="A simple Pomodoro timer for focused work and refreshing breaks."
+  >
+  <title>Focus Timer</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">ONE THING AT A TIME</p>
+      <h1>Focus Timer</h1>
+      <p class="subtitle">Make room for a little focused progress.</p>
+    </header>
+
+    <section class="timer-card" aria-label="Pomodoro timer">
+      <div class="modes" role="group" aria-label="Timer mode">
+        <button
+          type="button"
+          class="mode active"
+          data-mode="focus"
+          aria-pressed="true"
+        >
+          Focus
+        </button>
+        <button
+          type="button"
+          class="mode"
+          data-mode="short"
+          aria-pressed="false"
+        >
+          Short break
+        </button>
+        <button
+          type="button"
+          class="mode"
+          data-mode="long"
+          aria-pressed="false"
+        >
+          Long break
+        </button>
+      </div>
+
+      <p id="mode-label" class="mode-label">Time to focus</p>
+
+      <div
+          id="timer"
+          class="timer"
+          role="timer"
+          aria-label="Time remaining"
+          aria-live="off"
+      >
+        25:00
+      </div>
+
+      <progress
+          id="progress"
+          max="1500"
+          value="0"
+          aria-label="Session progress"
+      ></progress>
+
+      <div class="controls">
+        <button id="start-pause" type="button" class="primary">
+          Start
+        </button>
+        <button id="reset" type="button" class="secondary">
+          Reset
+        </button>
+      </div>
+
+      <p id="status" class="status" role="status">
+        Ready when you are.
+      </p>
+    </section>
+
+    <aside class="guide" aria-label="How to use the timer">
+      <h2>A simple rhythm</h2>
+      <p>
+        Focus for 25 minutes, then take a short break.
+        After four focus sessions, enjoy a long break.
+      </p>
+      <p class="note">
+        Choose each session manually. Keep this page open;
+        refreshing resets the timer. Sleeping devices may delay updates.
+      </p>
+    </aside>
+
+    <footer>Small steps. Meaningful progress.</footer>
+  </main>
+</body>
+</html>
