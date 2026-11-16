@@ -24,13 +24,41 @@ const progress = document.querySelector("#progress");
 const startPauseButton = document.querySelector("#start-pause");
 const resetButton = document.querySelector("#reset");
 const statusDisplay = document.querySelector("#status");
+const sessionCountDisplay = document.querySelector("#session-count");
 const modeButtons = document.querySelectorAll("[data-mode]");
 
+const SESSION_COUNT_KEY = "ruyiPomodoroCompletedFocusSessions";
+
+let completedFocusSessions = loadCompletedFocusSessions();
 let currentMode = "focus";
 let remainingMilliseconds = modes[currentMode].seconds * 1000;
 let deadline = 0;
 let intervalId = null;
 let running = false;
+
+function loadCompletedFocusSessions() {
+  try {
+    const savedCount = Number.parseInt(
+      window.localStorage.getItem(SESSION_COUNT_KEY) ?? "0",
+      10
+    );
+
+    return Number.isFinite(savedCount) && savedCount > 0 ? savedCount : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function saveCompletedFocusSessions() {
+  try {
+    window.localStorage.setItem(
+      SESSION_COUNT_KEY,
+      String(completedFocusSessions)
+    );
+  } catch {
+    // The counter still works for this app session if storage is unavailable.
+  }
+}
 
 function formatTime(milliseconds) {
   const totalSeconds = Math.ceil(milliseconds / 1000);
@@ -45,6 +73,7 @@ function render() {
   const totalSeconds = modes[currentMode].seconds;
 
   timerDisplay.textContent = formattedTime;
+  sessionCountDisplay.textContent = String(completedFocusSessions);
   modeLabel.textContent = modes[currentMode].label;
   progress.max = totalSeconds;
   progress.value = totalSeconds - remainingMilliseconds / 1000;
@@ -80,6 +109,12 @@ function stopInterval() {
 
 function finishSession() {
   stopInterval();
+
+  if (currentMode === "focus") {
+    completedFocusSessions += 1;
+    saveCompletedFocusSessions();
+  }
+
   remainingMilliseconds = 0;
   statusDisplay.textContent = modes[currentMode].completed;
   render();
